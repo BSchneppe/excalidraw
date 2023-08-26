@@ -5,7 +5,7 @@ import {
   NonDeletedExcalidrawElement,
 } from "../element/types";
 import {
-  AppClassProperties,
+  AppClassProperties, CanvasSize,
   InteractiveCanvasAppState,
   StaticCanvasAppState,
 } from "../types";
@@ -18,6 +18,7 @@ export type StaticCanvasRenderConfig = {
   /** when exporting the behavior is slightly different (e.g. we can't use
    CSS filters), and we disable render optimizations for best output */
   isExporting: boolean;
+  canvasSize: CanvasSize;
 };
 
 export type InteractiveCanvasRenderConfig = {
@@ -32,6 +33,8 @@ export type InteractiveCanvasRenderConfig = {
   // extra options passed to the renderer
   // ---------------------------------------------------------------------------
   renderScrollbars?: boolean;
+
+  canvasSize: CanvasSize;
 };
 
 export type RenderInteractiveSceneCallback = {

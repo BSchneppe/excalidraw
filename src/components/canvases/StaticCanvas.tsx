@@ -62,6 +62,8 @@ const StaticCanvas = (props: StaticCanvasProps) => {
 const getRelevantAppStateProps = (
   appState: AppState,
 ): StaticCanvasAppState => ({
+  canvasSize: appState.canvasSize,
+  fixedCanvasFrameElement: appState.fixedCanvasFrameElement,
   zoom: appState.zoom,
   scrollX: appState.scrollX,
   scrollY: appState.scrollY,

@@ -33,7 +33,15 @@ export const actionChangeViewBackgroundColor = register({
   },
   perform: (_, appState, value) => {
     return {
-      appState: { ...appState, ...value },
+      appState: {
+        ...appState,
+        ...value,
+        fixedCanvasFrameElement:
+          appState.fixedCanvasFrameElement &&
+          newElementWith(appState.fixedCanvasFrameElement, {
+            backgroundColor: value.viewBackgroundColor,
+          }),
+      },
       commitToHistory: !!value.viewBackgroundColor,
     };
   },
@@ -73,6 +81,9 @@ export const actionClearCanvas = register({
       ),
       appState: {
         ...getDefaultAppState(),
+        scrollX: appState.canvasSize.mode === "fixed" ? appState.scrollX : 0,
+        scrollY: appState.canvasSize.mode === "fixed" ? appState.scrollY : 0,
+        zoom: appState.zoom,
         files: {},
         theme: appState.theme,
         penMode: appState.penMode,

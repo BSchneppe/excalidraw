@@ -13,6 +13,7 @@ import { HelpButton } from "../HelpButton";
 import { Section } from "../Section";
 import Stack from "../Stack";
 import { UIAppState } from "../../types";
+import {Island} from "../Island";
 
 const Footer = ({
   appState,
@@ -44,10 +45,15 @@ const Footer = ({
       >
         <Stack.Col gap={2}>
           <Section heading="canvasActions">
-            <ZoomActions
-              renderAction={actionManager.renderAction}
-              zoom={appState.zoom}
-            />
+            {(appState.canvasSize.mode !== "fixed" ||
+              !appState.canvasSize.autoZoom) && (
+              <Island padding={1}>
+                <ZoomActions
+                  renderAction={actionManager.renderAction}
+                  zoom={appState.zoom}
+                />
+              </Island>
+            )}
 
             {!appState.viewModeEnabled && (
               <UndoRedoActions

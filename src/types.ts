@@ -105,6 +105,8 @@ export type SidebarName = string;
 export type SidebarTabName = string;
 
 type _CommonCanvasAppState = {
+  canvasSize: CanvasSize;
+  fixedCanvasFrameElement: NonDeletedExcalidrawElement | null;
   zoom: AppState["zoom"];
   scrollX: AppState["scrollX"];
   scrollY: AppState["scrollY"];
@@ -153,7 +155,19 @@ export type InteractiveCanvasAppState = Readonly<
   }
 >;
 
+export type CanvasSize =
+  | {
+  mode: "fixed";
+  width: number;
+  height: number;
+  autoZoom?: boolean;
+}
+  | { mode: "infinite" }
+  | { mode: "default" };
+
 export type AppState = {
+  canvasSize: CanvasSize;
+  fixedCanvasFrameElement: NonDeletedExcalidrawElement | null;
   contextMenu: {
     items: ContextMenuItems;
     top: number;
@@ -372,6 +386,7 @@ export type ExcalidrawInitialDataState = Merge<
 >;
 
 export interface ExcalidrawProps {
+  defaultCanvasSize?: { width: number; height: number; autoZoom?: boolean };
   onChange?: (
     elements: readonly ExcalidrawElement[],
     appState: AppState,

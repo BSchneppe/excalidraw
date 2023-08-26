@@ -678,12 +678,13 @@ const ExcalidrawWrapper = () => {
 
   return (
     <div
-      style={{ height: "100%" }}
+      style={{ height: "100%", width: "100%" }}
       className={clsx("excalidraw-app", {
         "is-collaborating": isCollaborating,
       })}
     >
       <Excalidraw
+        defaultCanvasSize={{ width: 400, height: 400, autoZoom: false }}
         ref={excalidrawRefCallback}
         onChange={onChange}
         initialData={initialStatePromiseRef.current.promise}

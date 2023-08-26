@@ -15,10 +15,13 @@ describe("exportToSvg", () => {
     { ...ellipseFixture, height: ELEMENT_HEIGHT, width: ELEMENT_WIDTH },
   ] as NonDeletedExcalidrawElement[];
 
+  const mode = "fixed" as const;
   const DEFAULT_OPTIONS = {
     exportBackground: false,
     viewBackgroundColor: "#ffffff",
+
     files: {},
+    canvasSize: {mode: mode,width: 400, height: 400, autoZoom: false}
   };
 
   it("with default arguments", async () => {

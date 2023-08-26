@@ -7,7 +7,7 @@ import {
   BinaryFiles,
   Point,
   Zoom,
-  AppState,
+  AppState, CanvasSize,
 } from "../types";
 import {
   ExcalidrawElement,
@@ -402,7 +402,11 @@ const bootstrapCanvas = ({
   theme,
   isExporting,
   viewBackgroundColor,
+  canvasSize,
+  fixedCanvasFrameElement,
 }: {
+  canvasSize: CanvasSize ;
+  fixedCanvasFrameElement: NonDeletedExcalidrawElement | null;
   canvas: HTMLCanvasElement;
   scale: number;
   normalizedWidth: number;
@@ -420,6 +424,11 @@ const bootstrapCanvas = ({
     context.filter = THEME_FILTER;
   }
 
+  const isFixedCanvasMode =
+    canvasSize.mode === "fixed" &&
+    fixedCanvasFrameElement &&
+    !isExporting;
+
   // Paint background
   if (typeof viewBackgroundColor === "string") {
     const hasTransparence =
@@ -427,13 +436,15 @@ const bootstrapCanvas = ({
       viewBackgroundColor.length === 5 || // #RGBA
       viewBackgroundColor.length === 9 || // #RRGGBBA
       /(hsla|rgba)\(/.test(viewBackgroundColor);
-    if (hasTransparence) {
+    if (hasTransparence||isFixedCanvasMode) {
       context.clearRect(0, 0, normalizedWidth, normalizedHeight);
     }
+    if (!isFixedCanvasMode) {
     context.save();
     context.fillStyle = viewBackgroundColor;
     context.fillRect(0, 0, normalizedWidth, normalizedHeight);
     context.restore();
+    }
   } else {
     context.clearRect(0, 0, normalizedWidth, normalizedHeight);
   }
@@ -459,11 +470,17 @@ const _renderInteractiveScene = ({
     scale,
   );
 
+  const fixedCanvasFrameElement = appState.fixedCanvasFrameElement;
+  const canvasSize = appState.canvasSize;
+
+
   const context = bootstrapCanvas({
     canvas,
     scale,
     normalizedWidth,
     normalizedHeight,
+    canvasSize,
+    fixedCanvasFrameElement
   });
 
   // Apply zoom
@@ -916,6 +933,9 @@ const _renderStaticScene = ({
     scale,
   );
 
+  const fixedCanvasFrameElement = appState.fixedCanvasFrameElement;
+  const canvasSize = appState.canvasSize;
+
   const context = bootstrapCanvas({
     canvas,
     scale,
@@ -924,10 +944,25 @@ const _renderStaticScene = ({
     theme: appState.theme,
     isExporting,
     viewBackgroundColor: appState.viewBackgroundColor,
+    canvasSize,
+    fixedCanvasFrameElement,
   });
 
   // Apply zoom
   context.scale(appState.zoom.value, appState.zoom.value);
+
+  if (appState.canvasSize.mode === "fixed") {
+    try {
+      const { width, height } = appState.canvasSize!;
+      context.rect(appState.scrollX, appState.scrollY, width, height);
+      context.clip();
+      renderElement(appState.fixedCanvasFrameElement!, rc, context, {
+        ...renderConfig,
+      },appState);
+    } catch (error: any) {
+      console.error(error);
+    }
+  }
 
   // Grid
   if (renderGrid && appState.gridSize) {

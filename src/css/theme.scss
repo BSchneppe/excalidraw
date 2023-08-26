@@ -2,6 +2,7 @@
 @import "./variables.module.scss";
 
 .excalidraw {
+  --behind-canvas-color: #222;
   --theme-filter: none;
   --button-destructive-bg-color: #{$oc-red-1};
   --button-destructive-color: #{$oc-red-9};

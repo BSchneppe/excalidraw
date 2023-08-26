@@ -122,6 +122,7 @@ const InteractiveCanvas = (props: InteractiveCanvasProps) => {
         scale: window.devicePixelRatio,
         appState: props.appState,
         renderConfig: {
+          canvasSize: props.appState.canvasSize,
           remotePointerViewportCoords: pointerViewportCoords,
           remotePointerButton: cursorButton,
           remoteSelectedElementIds,
@@ -167,6 +168,8 @@ const InteractiveCanvas = (props: InteractiveCanvasProps) => {
 const getRelevantAppStateProps = (
   appState: AppState,
 ): InteractiveCanvasAppState => ({
+  canvasSize: appState.canvasSize,
+  fixedCanvasFrameElement: appState.fixedCanvasFrameElement,
   zoom: appState.zoom,
   scrollX: appState.scrollX,
   scrollY: appState.scrollY,
