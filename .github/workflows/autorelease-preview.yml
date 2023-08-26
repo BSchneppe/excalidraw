@@ -18,15 +18,11 @@ jobs:
         with:
           node-version: 18.x
           registry-url: https://npm.pkg.github.com/
-      - name: Setup .yarnrc.yml
-        run: |
-          yarn config set 'npmRegistries["//npm.pkg.github.com/"].npmAuthToken' $NPM_AUTH_TOKEN
-          yarn --cwd ./src/packages/excalidraw config set 'npmRegistries["//npm.pkg.github.com/"].npmAuthToken' $NPM_AUTH_TOKEN
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Auto release preview
         id: "autorelease"
         run: |
           yarn add @actions/core
           yarn autorelease ${{ github.sha }}
           yarn --cwd ./src/packages/excalidraw publish --tag preview
+        env:
+            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
