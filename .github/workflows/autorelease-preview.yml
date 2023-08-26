@@ -23,7 +23,7 @@ jobs:
           yarn config set 'npmRegistries["//npm.pkg.github.com/"].npmAuthToken' $NPM_AUTH_TOKEN
           yarn --cwd ./src/packages/excalidraw config set 'npmRegistries["//npm.pkg.github.com/"].npmAuthToken' $NPM_AUTH_TOKEN
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Auto release preview
         id: "autorelease"
         run: |
