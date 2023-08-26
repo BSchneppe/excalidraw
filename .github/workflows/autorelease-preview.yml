@@ -24,4 +24,4 @@ jobs:
         id: "autorelease"
         run: |
           yarn add @actions/core
-          yarn autorelease preview ${{ github.event.issue.number }}
+          yarn autorelease ${{ github.sha }}
