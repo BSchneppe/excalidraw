@@ -20,7 +20,7 @@ const publish = () => {
       console.error(error.stdout && error.stdout.toString());  // Outputs stdout (if any)
       console.error(error.stderr && error.stderr.toString());  // Outputs the error message
     }
-    execSync(`yarn --cwd ${excalidrawDir} publish --tag ${tag}`);
+    execSync(`yarn --cwd ${excalidrawDir} publish --tag ${tag}`,{ env: { ...process.env} });
     console.info(`Published ${pkg.name}@${tag}🎉`);
     core.setOutput(
       "result",
