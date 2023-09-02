@@ -7344,7 +7344,7 @@ class App extends React.Component<AppProps, AppState> {
   /** adds new images to imageCache and re-renders if needed */
   private addNewImagesToImageCache = async (
     imageElements: InitializedExcalidrawImageElement[] = getInitializedImageElements(
-      this.scene.getNonDeletedElements(),
+      [...this.scene.getNonDeletedElements(), this.state.fixedCanvasFrameElement as ExcalidrawElement],
     ),
     files: BinaryFiles = this.files,
   ) => {

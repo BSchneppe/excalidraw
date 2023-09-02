@@ -51,6 +51,7 @@ export function adjustAppStateForCanvasSize(
         id: BACKGROUND_ELEMENT_ID,
         type: "image",
         fileId: BACKGROUND_FILE_ID,
+        boundElements: [],
         x: 0,
         y: 0,
         strokeColor: "#00000005",
