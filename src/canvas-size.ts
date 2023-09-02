@@ -4,7 +4,8 @@ import { getNormalizedZoom } from "./scene";
 import {AppProps, AppState, BinaryFiles, CanvasSize} from "./types";
 import {ExcalidrawImageElement} from "./element/types";
 
-const BACKGROUND_FILE_ID = "0000000000000000000000000000000000000000" as ExcalidrawImageElement["fileId"];
+export const BACKGROUND_ELEMENT_ID = "0000000000000000000000000000000000000000";
+export const BACKGROUND_FILE_ID = BACKGROUND_ELEMENT_ID as ExcalidrawImageElement["fileId"];
 
 export function adjustAppStateForCanvasSize(
   state: AppState,
@@ -47,6 +48,7 @@ export function adjustAppStateForCanvasSize(
         height: canvasSize.height,
       })
       : newImageElement({
+        id: BACKGROUND_ELEMENT_ID,
         type: "image",
         fileId: BACKGROUND_FILE_ID,
         x: 0,

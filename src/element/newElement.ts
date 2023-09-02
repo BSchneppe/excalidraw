@@ -383,6 +383,7 @@ export const newImageElement = (
     status?: ExcalidrawImageElement["status"];
     fileId?: ExcalidrawImageElement["fileId"];
     scale?: ExcalidrawImageElement["scale"];
+    id?: string;
   } & ElementConstructorOpts,
 ): NonDeleted<ExcalidrawImageElement> => {
   return {
