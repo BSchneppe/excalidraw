@@ -1,7 +1,10 @@
-import { newElement } from "./element";
+import {newImageElement} from "./element";
 import { newElementWith } from "./element/mutateElement";
 import { getNormalizedZoom } from "./scene";
-import { AppProps, AppState, CanvasSize } from "./types";
+import {AppProps, AppState, BinaryFiles, CanvasSize} from "./types";
+import {ExcalidrawImageElement} from "./element/types";
+
+const BACKGROUND_FILE_ID = "0000000000000000000000000000000000000000" as ExcalidrawImageElement["fileId"];
 
 export function adjustAppStateForCanvasSize(
   state: AppState,
@@ -42,14 +45,13 @@ export function adjustAppStateForCanvasSize(
       ? newElementWith(state.fixedCanvasFrameElement, {
         width: canvasSize.width,
         height: canvasSize.height,
-        backgroundColor: viewBackgroundColor,
       })
-      : newElement({
-        type: "rectangle",
+      : newImageElement({
+        type: "image",
+        fileId: BACKGROUND_FILE_ID,
         x: 0,
         y: 0,
         strokeColor: "#00000005",
-        backgroundColor: viewBackgroundColor,
         fillStyle: "solid",
         strokeWidth: 1,
         strokeStyle: "solid",
