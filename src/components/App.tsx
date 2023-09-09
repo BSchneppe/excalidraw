@@ -1769,7 +1769,7 @@ class App extends React.Component<AppProps, AppState> {
       false,
     );
 
-    if (!this.shouldPreventPanOrZoom()) {
+    if (!this.shouldPreventZoom()) {
       // Safari-only desktop pinch zoom
       document.addEventListener(
         EVENT.GESTURE_START,
@@ -3802,7 +3802,7 @@ class App extends React.Component<AppProps, AppState> {
       initialScale &&
       gesture.initialDistance
     ) {
-      if (this.shouldPreventPanOrZoom()) {
+      if (this.shouldPreventZoom()) {
         return;
       }
       const center = getCenter(gesture.pointers);
@@ -4097,7 +4097,7 @@ class App extends React.Component<AppProps, AppState> {
           isTextElement(hitElement) ? CURSOR_TYPE.TEXT : CURSOR_TYPE.CROSSHAIR,
         );
       } else if (this.state.viewModeEnabled) {
-        if (this.shouldPreventPanOrZoom()) {
+        if (this.shouldPreventZoom()) {
           setCursor(this.canvas, CURSOR_TYPE.AUTO);
         } else {
           setCursor(this.canvas, CURSOR_TYPE.GRAB);
@@ -4677,8 +4677,7 @@ class App extends React.Component<AppProps, AppState> {
           isHandToolActive(this.state) ||
           this.state.viewModeEnabled)
       ) ||
-      isTextElement(this.state.editingElement) ||
-      this.shouldPreventPanOrZoom()
+      isTextElement(this.state.editingElement)
     ) {
       return false;
     }
@@ -4906,7 +4905,7 @@ class App extends React.Component<AppProps, AppState> {
       });
     }
   };
-  private shouldPreventPanOrZoom(): boolean {
+  private shouldPreventZoom(): boolean {
     const { canvasSize: cs } = this.state;
     return cs.mode === "fixed" && !!cs.autoZoom;
   }
@@ -4918,7 +4917,7 @@ class App extends React.Component<AppProps, AppState> {
     event: React.PointerEvent<HTMLElement>,
     pointerDownState: PointerDownState,
   ): boolean => {
-    if (this.state.viewModeEnabled && this.shouldPreventPanOrZoom()) {
+    if (this.state.viewModeEnabled && this.shouldPreventZoom()) {
       return true;
     }
     if (this.state.activeTool.type === "selection") {
@@ -7986,7 +7985,7 @@ class App extends React.Component<AppProps, AppState> {
       event: WheelEvent | React.WheelEvent<HTMLDivElement | HTMLCanvasElement>,
     ) => {
       event.preventDefault();
-      if (isPanning || this.shouldPreventPanOrZoom()) {
+      if (isPanning || this.shouldPreventZoom()) {
         return;
       }
 
